@@ -45,3 +45,30 @@ function printAnything<T>(arr: T[]): void {
 printAnything<string>(['a', 'b', 'c']);
 //becouse of type interference skipping type anotation is ok as well
 printAnything(['a', 'b', 'c']);
+
+class Car {
+  print() {
+    console.log('I am a car');
+  }
+}
+class House {
+  print() {
+    console.log('I am a house');
+  }
+}
+
+interface Printable {
+  print(): void;
+}
+
+function printHousesOrCars<T extends Printable>(array: T[]): void {
+  for (let index = 0; index < array.length; index++) {
+    array[index].print();
+  }
+}
+
+//this wont work becouse numbers are not of Printable type
+//printHousesOrCars([1, 2, 3, 4]);
+
+printHousesOrCars<House>([new House(), new House()]);
+printHousesOrCars<Car>([new Car(), new Car()]);
